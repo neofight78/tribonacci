@@ -1,0 +1,18 @@
+[package]
+name = "tribonacci"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+actix-web = "4.0.0-beta.10"
+
+[dev-dependencies]
+actix-rt = "2.3.0"
+reqwest = "0.11.6"
+test-case = "1.2.0"
+tokio = "1.12.0"
+
+[profile.release]
+lto = true
