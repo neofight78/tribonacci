@@ -21,4 +21,19 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/neofight78/tribonacci:latest
+          tags: ghcr.io/neofight78/tribonacci:${{ github.sha }}
+  deploy:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_TOKEN }}
+
+      - name: Kubernetes apply
+        run: |
+          doctl kubernetes cluster kubeconfig show production > production-kubeconfig.yaml
+          helm --kubeconfig=production-kubeconfig.yaml upgrade --install tribonacci ./helm/tribonacci --set image.tag=$GITHUB_SHA --set ingress.host=tribonacci.whoggarth.org

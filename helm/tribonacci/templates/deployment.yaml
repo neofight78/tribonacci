@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tribonacci
+  namespace: default
+  labels:
+    app: tribonacci
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: tribonacci
+  template:
+    metadata:
+      labels:
+        app: tribonacci
+    spec:
+      containers:
+        - name: tribonacci
+          image: ghcr.io/neofight78/tribonacci:{{ .Values.image.tag }}
+      imagePullSecrets:
+        - name: ghcr-auth

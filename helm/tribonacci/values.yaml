@@ -1,0 +1,7 @@
+replicaCount: 2
+
+image:
+  tag: latest
+
+ingress:
+  host: tribonacci.local
