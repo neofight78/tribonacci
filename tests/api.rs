@@ -17,6 +17,17 @@ fn launch() -> String {
 }
 
 #[actix_rt::test]
+async fn given_an_invalid_value_a_bad_request_should_be_returned() {
+    let server_url = launch();
+
+    let response = reqwest::get(format!("{}/tribonacci/invalid", server_url))
+        .await
+        .expect("Unable to make request");
+
+    assert_eq!(response.status(), StatusCode::BAD_REQUEST);
+}
+
+#[actix_rt::test]
 async fn given_zero_a_bad_request_should_be_returned() {
     let server_url = launch();
 
