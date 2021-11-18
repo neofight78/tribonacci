@@ -10,4 +10,6 @@ RUN cargo build --target x86_64-unknown-linux-musl --release
 FROM scratch
 COPY --from=build /app/target/x86_64-unknown-linux-musl/release/tribonacci .
 
+ENV APP_ENVIRONMENT production
+
 CMD ["./tribonacci"]
